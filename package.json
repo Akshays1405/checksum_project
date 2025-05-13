@@ -4,13 +4,15 @@
   "description": "Test project",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test --headed",
+    "test:report": "playwright test && node generate-report.js",
+    "report": "node generate-report.js"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.0",
-    "@types/node": "^22.15.17"
+    "@types/node": "^20.9.0"
   }
 }

@@ -55,14 +55,6 @@ export class KanbanMainPage {
     return Number(firstColText[2])
   }
 
-  async print() {
-    console.log(await this.getFirstColumnText())
-    console.log(await this.getNumberOfTasksOnFirstColumn())
-    console.log("strick man->", await this.getStrikedTasks())
-    console.log("strick man->", await this.getAllSubtasks())
-    console.log('non com task', await this.getNotCompletedTasks())
-  }
-
   /**
    * Check if any cards are available on the board
    * @returns Boolean indicating if cards are available
@@ -70,7 +62,6 @@ export class KanbanMainPage {
   async areCardsAvailable() {
     const cards = this.page.locator('//p[@class="text-xs text-medium-grey font-bold select-none"]').nth(1);
     const count = await cards.count();
-    console.log(`Found ${count} cards on the board`);
     return count > 0;
   }
 
@@ -83,7 +74,6 @@ export class KanbanMainPage {
       console.log(`Checking for cards - attempt ${attempt + 1}`);
       
       if (await this.areCardsAvailable()) {
-        console.log('Cards are available on the board');
         return true;
       }
       
@@ -109,18 +99,14 @@ export class KanbanMainPage {
     const elements = this.page.locator('//p[@class="text-xs text-medium-grey font-bold select-none"]');
     const count = await elements.count();
     const startIndex = await this.getNumberOfTasksOnFirstColumn();
-    console.log('count', count);
 
     for (let i = startIndex; i < count; i++) {
       const text = await elements.nth(i).innerText();
-      console.log('text', text);
       const match = text.match(/(\d+)\s+of\s+(\d+)\s+substasks/i);
-      console.log('match', match);
 
       if (match) {
         const completed = parseInt(match[1], 10);
         const total = parseInt(match[2], 10);
-        console.log(completed, total);
 
         if (completed < total) {
           const firstIncompleteLocator = elements.nth(i);
@@ -182,14 +168,12 @@ export class KanbanMainPage {
 
   async verifySubtaskIsStrikedOff() {
     const strikedTasks = await this.getStrikedTasks();
-    console.log(`Striked tasks: ${JSON.stringify(strikedTasks)}`);
-    console.log(`Looking for subtask: ${this.clickedSubtaskText}`);
+ 
     
     const isSubtaskStriked = strikedTasks.some(task => 
       task.trim() === this.clickedSubtaskText.trim()
     );
     
-    console.log(`Is subtask striked: ${isSubtaskStriked}`);
     expect(isSubtaskStriked).toBe(true);
     
     return isSubtaskStriked;
@@ -201,7 +185,6 @@ export class KanbanMainPage {
     const firstColumn = await this.firstTaskColumn();
     const cards = firstColumn.locator('[class="group flex flex-col bg-white dark:bg-dark-grey p-4 rounded-lg cursor-pointer shadow-task max-w-[280px]"]');
     const count = await cards.count();
-    console.log(`Found ${count} cards in the first column`);
     return count;
   }
 
@@ -210,11 +193,9 @@ export class KanbanMainPage {
     for (let attempt = 0; attempt < this.maxRefreshAttempts; attempt++) {
       const count = await this.getCardCountInFirstColumn();
       if (count > 0) {
-        console.log('Cards found in the first column');
         return true;
       }
       
-      console.log('No cards found in first column, refreshing the page');
       await this.page.reload();
       await helper.sleep(3);
     }
@@ -263,8 +244,7 @@ export class KanbanMainPage {
     
     expect(currentCardCount).toBeLessThan(this.initialCardCount);
     
-    console.log(`Successfully deleted task "${this.deletedTaskName}"`);
-    console.log(`Card count decreased from ${this.initialCardCount} to ${currentCardCount}`);
+
     
     return currentCardCount < this.initialCardCount;
   }

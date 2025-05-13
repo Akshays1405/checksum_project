@@ -1,0 +1,114 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Test Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body { padding: 20px; }
+      .success-border { border-left: 5px solid #198754; }
+      .danger-border { border-left: 5px solid #dc3545; }
+      .warning-border { border-left: 5px solid #ffc107; }
+      .error-details { margin-top: 15px; background-color: #f8f9fa; padding: 10px; border-radius: 5px; }
+      .error-stack { font-size: 0.8em; color: #6c757d; margin-top: 10px; max-height: 200px; overflow-y: auto; }
+      .score-container { font-size: 2rem; }
+      .progress { height: 30px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mb-4">Enhanced Test Report</h1>
+      
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h2 class="h4 mb-0">Test Summary</h2>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4">
+              <div class="score-container text-center">
+                <span class="display-1 fw-bold text-success">100%</span>
+                <p class="lead">Overall Score</p>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="row mb-2">
+                <div class="col-sm-3">Total Tests:</div>
+                <div class="col-sm-9 fw-bold">2</div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-sm-3">Passed:</div>
+                <div class="col-sm-9 fw-bold text-success">2</div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-sm-3">Failed:</div>
+                <div class="col-sm-9 fw-bold text-danger">0</div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-sm-3">Skipped:</div>
+                <div class="col-sm-9 fw-bold text-warning">0</div>
+              </div>
+              <div class="progress mt-3">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" 
+                     aria-valuenow="2" aria-valuemin="0" aria-valuemax="2">
+                  100%
+                </div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" 
+                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="2">
+                  0%
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <h2 class="mb-3">Test Details</h2>
+      
+      <div class="card mb-3 test-card success-border">
+        <div class="card-header bg-success text-white d-flex justify-content-between">
+          <span>deleteTask.spec.ts › Delete a task from the first column</span>
+          <span>Score: 1/1</span>
+        </div>
+        <div class="card-body">
+          <p><strong>File:</strong> deleteTask.spec.ts</p>
+          <p><strong>Status:</strong> <span class="badge bg-success">PASSED</span></p>
+          <p><strong>Duration:</strong> 7985ms</p>
+          
+        </div>
+      </div>
+    
+      <div class="card mb-3 test-card success-border">
+        <div class="card-header bg-success text-white d-flex justify-content-between">
+          <span>kanban.spec.ts › get started link</span>
+          <span>Score: 1/1</span>
+        </div>
+        <div class="card-body">
+          <p><strong>File:</strong> kanban.spec.ts</p>
+          <p><strong>Status:</strong> <span class="badge bg-success">PASSED</span></p>
+          <p><strong>Duration:</strong> 2894ms</p>
+          
+        </div>
+      </div>
+    
+    </div>
+    
+    <script>
+      // Add some interactivity
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add click handler to expand/collapse error stacks
+        document.querySelectorAll('.card-header').forEach(header => {
+          header.addEventListener('click', function() {
+            const errorStack = this.closest('.test-card').querySelector('.error-stack');
+            if (errorStack) {
+              errorStack.style.display = errorStack.style.display === 'none' ? 'block' : 'none';
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+  </html>
+  

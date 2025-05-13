@@ -10,8 +10,6 @@ test('Delete a task from the first column', async ({ page }) => {
   
   await helper.sleep(3);
   
-  console.log('Starting task deletion test');
-  await kanban.print();
   
   await kanban.deleteTaskAndVerify();
   
